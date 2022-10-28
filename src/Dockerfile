@@ -1,7 +1,7 @@
-from node:18.11.0
-workdir /app
-copy package*.json ./
-run npm install
-copy . .
-expose 8080
-cmd ["node", "server.js"]
+FROM node:14.17.5
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8080
+CMD ["node","server.js"]
