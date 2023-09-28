@@ -18,9 +18,15 @@ services:
     volumes:
       - kubedevnews:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=kubedevnews
-      - POSTGRES_PASSWORD=Pg#123
-      - POSTGRES_DB=kubedevnews
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespwd
+      - POSTGRES_DB=postgresdb
+  postgres-exporter:
+    image: bitnami/postgres-exporter:0.14.0
+    networks:
+      - produto_net
+    ports:
+      - 3131:3131
   node:
     image: harrisonlima/kube-news:v1
     networks:
@@ -29,17 +35,22 @@ services:
       - postgres
     ports:
       - 8080:8080
-  pgadmin:
-    image: dpage/pgadmin4:6.15
-    ports:
-      - 80:80
-    networks:
-      - produto_net
-    depends_on:
-      - postgres
-      - node
     environment:
-      - PGADMIN_DEFAULT_EMAIL=postuser@postuser.com
-      - PGADMIN_DEFAULT_PASSWORD=postpwd
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - DB_DATABASE=postgresdb
+      - DB_PASSWORD=postgrespwd
+      - DB_USERNAME=postgresuser
+      - DB_HOST=postgres
+  # pgadmin:
+  #   image: dpage/pgadmin4:6.15
+  #   ports:
+  #     - 80:80
+  #   networks:
+  #     - produto_net
+  #   depends_on:
+  #     - postgres
+  #     - node
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=postuser@postuser.com
+  #     - PGADMIN_DEFAULT_PASSWORD=postpwd
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
