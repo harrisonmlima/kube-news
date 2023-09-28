@@ -44,7 +44,7 @@ pipeline {
     stage('Changing the ECS') {
      steps{  
          script {
-                aws ecs update-service --cluster web-ecs --service kube-news-service --force-new-deployment --region us-east-1
+                
          }
         }
       }
