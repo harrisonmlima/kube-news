@@ -8,10 +8,10 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: web-ecr
-  ECS_SERVICE: kube-news-service
+  ECS_SERVICE: web-ecs-service
   ECS_CLUSTER: web-ecs
   ECS_TASK_DEFINITION: .aws/task-definition.json
-  CONTAINER_NAME: kube-news
+  CONTAINER_NAME: web-container
 
 jobs:
   deploy:
